@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,6 @@
   .btn-no { background: #fff2b3; color:#b92b27; }
   .btn-no:hover { background: #ffe08a; }
 
-  /* Popup message for No button */
   #message {
     position: fixed;
     top: 40%;
@@ -52,7 +51,6 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
-  /* Floating petals and hearts */
   .floating {
     position: absolute;
     width: 20px;
@@ -73,15 +71,20 @@
 </div>
 
 <div id="message">
-  Speak from your heart, feel me❤️
- एकैछिन आँखा बन्द गरी मलाई सम्झ त प्यारी❤️❤️<br>
+  Speak from your heart, feel me ❤️<br>
+  एकैछिन आँखा बन्द गरी मलाई सम्झ त प्यारी ❤️❤️<br>
   <button class="btn btn-yes" onclick="hideMessage()">OK</button>
 </div>
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("N-HT2ru9cSL_UIS1v"); // Your Public Key
+</script>
 
 <script>
 const app = document.getElementById('app');
 
-// Interaction functions
 function loveNo() {
   document.getElementById('message').style.display = 'block';
 }
@@ -97,10 +100,20 @@ function loveYes() {
   `;
 }
 function endMessage(choice) {
-  app.innerHTML = `<h1>Love you Budi ❤️</h1>
-                   <p>Thank you for choosing ${choice} with me!</p>
-                   <p>Send me your choice: <span style="color:#b92b27;">subedimanoj55@gmail.com</span></p>`;
+  app.innerHTML = `<h1>Love you Pyari ❤️</h1>
+                   <p>३६५ दिन नै बाहिर ${choice} गर्न पाए त मेरी प्यारी ३६५ दिन नै खुशी हुन्छिन् नि 😄!</p>`;
+
+  // Send email using EmailJS
+  emailjs.send("service_632l0ai", "template_wk04dtq", {
+    choice: choice,
+    to_email: "subedimanoj55@gmail.com"
+  }).then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+  }, function(error) {
+      console.log('FAILED...', error);
+  });
 }
+
 function showHome() {
   app.innerHTML = `
     <h1>Do you love me ?</h1>
@@ -111,41 +124,39 @@ function showHome() {
 
 // Floating petals and hearts animation
 function createFloating(url, count, sizeMin, sizeMax) {
-  for(let i=0; i<count; i++){
-    const el = document.createElement('div');
-    el.className = 'floating';
-    el.style.backgroundImage = `url(${url})`;
-    const size = sizeMin + Math.random()*(sizeMax-sizeMin);
-    el.style.width = el.style.height = size+'px';
-    el.style.left = Math.random()*100 + 'vw';
-    el.style.top = -50 - Math.random()*100 + 'px';
+  for(let i=0;i<count;i++){
+    const el=document.createElement('div');
+    el.className='floating';
+    el.style.backgroundImage=`url(${url})`;
+    const size=sizeMin+Math.random()*(sizeMax-sizeMin);
+    el.style.width=el.style.height=size+'px';
+    el.style.left=Math.random()*100+'vw';
+    el.style.top=-50-Math.random()*100+'px';
     document.body.appendChild(el);
     animateFloating(el);
   }
 }
-
-function animateFloating(el) {
-  let top = parseFloat(el.style.top);
-  const speed = 0.5 + Math.random();
-  const rotateSpeed = 0.5 + Math.random();
-  function frame() {
-    top += speed;
-    el.style.top = top + 'px';
-    el.style.transform = `rotate(${top*rotateSpeed}deg)`;
-    if(top > window.innerHeight + 50){
-      top = -50;
-      el.style.left = Math.random()*100 + 'vw';
+function animateFloating(el){
+  let top=parseFloat(el.style.top);
+  const speed=0.5+Math.random();
+  const rotateSpeed=0.5+Math.random();
+  function frame(){
+    top+=speed;
+    el.style.top=top+'px';
+    el.style.transform=`rotate(${top*rotateSpeed}deg)`;
+    if(top>window.innerHeight+50){
+      top=-50;
+      el.style.left=Math.random()*100+'vw';
     }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 }
 
-// Create petals and hearts
-createFloating('https://i.ibb.co/3kZc5pL/rose-petal.png', 20, 10, 25);
-createFloating('https://i.ibb.co/znzGd8P/love-heart.png', 15, 15, 30);
+// Use **red petals** and **red hearts**
+createFloating('https://i.ibb.co/1rM8R8F/red-rose-petal.png', 20, 10, 25);
+createFloating('https://i.ibb.co/QYw6zZq/red-heart.png', 15, 15, 30);
 
 </script>
 </body>
 </html>
-
